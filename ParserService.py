@@ -1,58 +1,8 @@
 import socket
-import json
 import sys
 import time
 import signal
-
-class Parser:
-    def __init__(self):
-        pass
-
-
-    @staticmethod
-    def __get_config():
-        try:
-            with open('config.txt','r') as file:
-                config = {}
-                for line in file:
-                    line = line.strip().split(':')
-                    config[line[0].strip().lower()] = line[1].strip()
-                return config
-        except FileNotFoundError as error:
-            print('No existe archivo de configuracion.')
-            exit(error)
-
-
-    @staticmethod
-    def __get_monedas():
-        try:
-            config = Parser.__get_config()
-            monedas = []
-            header = True
-            with open(config['path'] + config['file'],'r') as file:
-                for line in file:
-                    if header:
-                        header = False
-                    else:
-                        line = line = line.strip().split(',')
-                        # formato archivo: id,nombre,compra,venta
-                        # formato moneda: {"id": 1, "value1": 60, "value2": 65, "name": "Dolar"}
-                        moneda = {}
-                        moneda['id'] = line[0]
-                        moneda['value1'] = line[2]
-                        moneda['value2'] = line[3]
-                        moneda['name'] = line[1]
-                        monedas.append(moneda)
-                return monedas
-        except FileNotFoundError as error:
-            print('No existe archivo cambios actuales.')
-            exit(error)
-
-        
-    def get_json(self):
-        monedas = Parser.__get_monedas()
-        return json.dumps(monedas)
-            
+from moneda import Moneda, Parser
 
 class Main:
     BUFFER_SIZE = 1024
