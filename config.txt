@@ -1,0 +1,2 @@
+path:/Users/raulcamacho/Documents/CESE/PASOPG/TP1_alumnos/
+file:cambio.csv
